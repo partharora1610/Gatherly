@@ -8,3 +8,5 @@ export default authMiddleware({});
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
+
+// Need to understand how this matcher works

@@ -7,3 +7,5 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default AuthLayout;
+
+// These tailwind classes are not working need to see what is happening
