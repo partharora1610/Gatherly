@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -36,6 +36,12 @@ import {
 } from "@/components/ui/dialog";
 
 const IntialModal = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,6 +55,10 @@ const IntialModal = () => {
   const onSubmit = () => {
     console.log("Form submitted");
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Dialog open>
