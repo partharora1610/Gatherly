@@ -1,5 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import { auth } from "@clerk/nextjs";
 import { currentProfile } from "@/lib/current-profile";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/lib/db";
@@ -7,17 +6,14 @@ import { MemberRole } from "@prisma/client";
 
 export const POST = async (req: NextRequest) => {
   try {
-    // getting data from the user
     const { name, imageUrl } = await req.json();
 
-    // getting the whole profile of the user
     const profile = await currentProfile();
 
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // if the profile exist create a server
     const server = await db.server.create({
       data: {
         profileId: profile.id,

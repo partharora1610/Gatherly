@@ -5,7 +5,6 @@ export const initialProfile = async () => {
   const user = await currentUser();
 
   if (!user) {
-    // redierct to the login page
     return redirectToSignIn();
   }
 
