@@ -1,21 +1,6 @@
 "use client";
 
-import React from "react";
-import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import React, { useEffect, useState } from "react";
 
 import {
   Dialog,
@@ -25,65 +10,48 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import FileUpload from "../file-upload";
-import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { useForm } from "react-hook-form";
+import FileUpload from "../file-upload";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import axios from "axios";
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Server must have a name",
-  }),
-  imageUrl: z.string().min(1, {
-    message: "Server must have an image",
-  }),
-});
+const ServerSettingsModal = () => {
+  const [server, setServer] = useState({});
 
-const CreateServerModal = () => {
-  const router = useRouter();
   const { isOpen, onClose, type } = useModal();
 
-  const isModalOpen = isOpen && type == "createServer";
+  const isModalOpen = isOpen && type === "settings";
 
-  // Setting up the form using the zod schema that we created
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      imageUrl: "",
-    },
-  });
+  // need to load the already saved server info here so that the user can edit that information
+
+  const onSubmit = () => {};
+
+  const form = useForm();
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-
-    try {
-      await axios.post("/api/servers", values);
-      form.reset();
-      router.refresh();
-      window.location.reload();
-
-      // Calling the method from the zustand store
-      // useModalHook
-      onClose();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // here we need to load up the deatils of the server
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white text-black overflow-hidden p-0">
         <DialogHeader className="pt-8 px-6"></DialogHeader>
         <DialogTitle className="text-2xl font-bold text-center">
-          Customize your server
+          Server Setting
         </DialogTitle>
         <DialogDescription className="text-center text-zinc-500">
-          Give your server a personality with a name and image. You can always
-          change that later
+          You can change these settings anytime in the future
         </DialogDescription>
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
@@ -132,7 +100,7 @@ const CreateServerModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button type="submit" variant={"primary"}>
-                Create
+                Save
               </Button>
             </DialogFooter>
           </form>
@@ -142,4 +110,4 @@ const CreateServerModal = () => {
   );
 };
 
-export default CreateServerModal;
+export default ServerSettingsModal;

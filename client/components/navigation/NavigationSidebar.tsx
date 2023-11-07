@@ -7,6 +7,7 @@ import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
 import Image from "next/image";
 import NavigationItem from "./NavigationItem";
+import NavigationBottomAction from "./NavigationBottomAction";
 
 // server component so we can use async here...
 const NavigationSidebar = async () => {
@@ -30,10 +31,12 @@ const NavigationSidebar = async () => {
   return (
     <div className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] py-3">
       <NavigationAction />
+
       <Separator
         className="h-[2px] bg-zinc-200 dark:bg-zinc-700 rounded-md
       w-10 mx-auto"
       />
+
       <ScrollArea className="flex-1 w-full">
         {servers.map((server) => {
           return (
@@ -47,6 +50,8 @@ const NavigationSidebar = async () => {
           );
         })}
       </ScrollArea>
+
+      <NavigationBottomAction />
     </div>
   );
 };

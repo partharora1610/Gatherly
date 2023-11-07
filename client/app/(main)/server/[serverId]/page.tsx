@@ -1,8 +1,13 @@
-import { useParams } from "next/navigation";
+// "use client";
+
 import React from "react";
 
 const ServerPage = () => {
-  return <div>This is the individual server Page</div>;
+  return (
+    <>
+      <div>This is the individual server Page</div>
+    </>
+  );
 };
 
 export default ServerPage;

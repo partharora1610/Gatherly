@@ -1,7 +1,12 @@
-import React from "react";
+// This is the modal store that I am creating using zustand...
 import { create } from "zustand";
 
-export type ModalType = "createServer";
+export type ModalType =
+  | "createServer"
+  | "invite"
+  | "manageMembers"
+  | "settings"
+  | "deleteServer";
 
 interface ModalStore {
   type: ModalType | null;
